@@ -80,6 +80,11 @@ The **Nalanda Library Backend** is a RESTful API built with **Node.js** and **Ex
 > - All protected routes require JWT in the `Authorization` header.  
 > - `borrowBookById` and `returnBookById` are restricted to `Admin` and `Member`.  
 > - `Admin` routes like `/books` and `/admin` require the user to have `Admin` role.
+> - 
+---
+
+
+
 
 
 ## 🛡️ Middleware & Access Control
