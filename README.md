@@ -106,8 +106,6 @@ router.get("/borrowsByMember", adminOrMember, async (req, res) => { ... });
 
 ## 📁 Project Structure
 
-## 📁 Project Structure
-
 > **Folders:**  
 > - `/Config` : Database connection and configuration  
 > - `/Controllers` : Route handlers containing business logic  
