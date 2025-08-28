@@ -5,16 +5,16 @@ const { borrowBookLocal, borrowBookProduction, returnBook, borrowBooksForMember 
 
 
 // (Protected Route) : Borrow Book (This is for MongoDB Atlas,it supports) 
-router.post("/borrowBookById", adminOrMember,);
+router.post("/borrowBookById", adminOrMember,borrowBookProduction);
 
 // (Protected Route) : Borrow Book
-router.post("/borrowBookById", adminOrMember,);
+// router.post("/borrowBookById", adminOrMember,);
 
 // (Protected Route) : Return Book
-router.post("/returnBookById/:borrowId", adminOrMember,);
+router.post("/returnBookById/:borrowId", adminOrMember,returnBook);
 
 // (Protected Route) : Get All Borrows For a Member
-router.get("/borrowsByMember/", adminOrMember,);
+router.get("/borrowsByMember/", adminOrMember,borrowBooksForMember);
 
 
 module.exports = router;
