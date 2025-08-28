@@ -80,3 +80,19 @@ The **Nalanda Library Backend** is a RESTful API built with **Node.js** and **Ex
 > - All protected routes require JWT in the `Authorization` header.  
 > - `borrowBookById` and `returnBookById` are restricted to `Admin` and `Member`.  
 > - `Admin` routes like `/books` and `/admin` require the user to have `Admin` role.
+
+
+## 🛡️ Middleware & Access Control
+
+| Middleware | Description | Usage |
+|------------|------------|-------|
+| `adminOnly` | Restricts access to Admin users only. Requests from non-admins will receive a 403 Forbidden response. | Apply to routes that should only be accessible by admins, e.g., adding/updating/deleting books, viewing admin reports. |
+| `authCheck` | Verifies the presence and validity of the JWT token in the `Authorization` header (`Bearer <token>`). Returns 401 Unauthorized if the token is missing or invalid. | Apply to routes that require authentication, e.g., fetching user profile or borrows. |
+| `adminOrMember` | Allows access to both Admins and Members. Ensures that a valid JWT is provided and checks the user role. | Apply to routes where both roles can perform actions, e.g., borrowing or returning books. |
+
+> **Usage Example in Express:**
+```javascript
+const { adminOnly, authCheck, adminOrMember } = require("../middlewares/Auth");
+
+router.post("/books", adminOnly, async (req, res) => { ... });
+router.get("/borrowsByMember", adminOrMember, async (req, res) => { ... });
