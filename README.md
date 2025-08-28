@@ -101,3 +101,21 @@ const { adminOnly, authCheck, adminOrMember } = require("../middlewares/Auth");
 
 router.post("/books", adminOnly, async (req, res) => { ... });
 router.get("/borrowsByMember", adminOrMember, async (req, res) => { ... });
+
+---
+
+
+## 📌 Folder Structure
+
+/Nalanda-Library-BackEnd
+│
+├── /Config          # Database connection and configuration
+├── /Controllers     # Route handlers for business logic
+├── /Middlewares     # Authentication and authorization middleware
+├── /Models          # Mongoose models for MongoDB collections
+├── /Routes          # API route definitions
+├── /Utils           # Utility functions and helpers
+├── .gitignore       # Git ignore file
+├── app.js           # Main application entry point
+├── package.json     # Project metadata and dependencies
+└── .env             # Environment variables (not included in version control)
