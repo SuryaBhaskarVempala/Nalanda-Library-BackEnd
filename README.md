@@ -38,18 +38,13 @@ The **Nalanda Library Backend** is a RESTful API built with **Node.js** and **Ex
 
 ## 📌 API Endpoints
 ## 1.Authentication
-
-POST /signup: Register a new member.
-
-Body: { "name": "John Doe", "email": "john@example.com", "password": "password123" }
-
-Response: { "user": { ... }, "token": "jwt_token_here" }
-
-POST /login: Authenticate a member and receive a token.
-
-Body: { "email": "john@example.com", "password": "password123" }
-
-Response: { "user": { ... }, "token": "jwt_token_here" }
+- POST /signup: Register a new member.
+  Body: { "name": "John Doe", "email": "john@example.com", "password": "password123" }
+  Response: { "user": { ... }, "token": "jwt_token_here" }
+  
+- POST /login: Authenticate a member and receive a token.
+  Body: { "email": "john@example.com", "password": "password123" }
+  Response: { "user": { ... }, "token": "jwt_token_here" }
 
 Book Management (Admin Only)
 
