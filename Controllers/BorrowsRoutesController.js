@@ -110,7 +110,6 @@ const returnBook = async (req, res) => {
 
         const member = await Member.findByIdAndUpdate(
             borrow.user,
-            { $inc: { borrowCount: -1 } },
             { new: true }
         );
         if (!member) throw new Error("Member not found");
