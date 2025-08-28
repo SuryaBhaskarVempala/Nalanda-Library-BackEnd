@@ -34,62 +34,49 @@ The **Nalanda Library Backend** is a RESTful API built with **Node.js** and **Ex
 - Include the token in the Authorization header as a Bearer token for subsequent requests.
 
 
-.
-
 ## 📌 API Endpoints
-## 1.Authentication
-- POST /signup: Register a new member.
-  Body: { "name": "John Doe", "email": "john@example.com", "password": "password123" }
-  Response: { "user": { ... }, "token": "jwt_token_here" }
-  
-- POST /login: Authenticate a member and receive a token.
-  Body: { "email": "john@example.com", "password": "password123" }
-  Response: { "user": { ... }, "token": "jwt_token_here" }
 
-Book Management (Admin Only)
+---
 
-POST /books: Add a new book.
+### 1️⃣ Authentication
 
-Body: { "title": "Book Title", "author": "Author Name", "genre": "Genre", "copies": 5 }
+| Method | Endpoint | Headers | Body | Description | Response |
+|--------|----------|---------|------|-------------|----------|
+| POST | `/signup` | None | `{ "name": "John Doe", "email": "john@example.com", "password": "password123" }` | Register a new member | `{ "user": { "id": "...", "name": "...", "email": "...", "role": "Member" }, "token": "jwt_token_here" }` |
+| POST | `/login` | None | `{ "email": "john@example.com", "password": "password123" }` | Authenticate a member and receive JWT | `{ "user": { "id": "...", "name": "...", "email": "...", "role": "Member" }, "token": "jwt_token_here" }` |
 
-Response: { "message": "Book added successfully" }
+---
 
-GET /books: List all books with optional filters.
+### 2️⃣ Book Management (Admin Only)
 
-Query Params: title, author, genre, sort (asc/desc)
+| Method | Endpoint | Headers | Body / Query Params | Description | Response |
+|--------|----------|---------|-------------------|-------------|----------|
+| POST | `/books` | `Authorization: Bearer <token>` | `{ "title": "Book Title", "author": "Author Name", "genre": "Genre", "copies": 5 }` | Add a new book | `{ "message": "Book added successfully" }` |
+| GET | `/books` | None | `?title=Book&author=Author&genre=Genre&sort=asc|desc&page=1&limit=10` | List all books with optional filters, sorting & pagination | `{ "total": 100, "page": 1, "pages": 10, "books": [ ... ] }` |
+| PUT | `/books` | `Authorization: Bearer <token>` | `{ "id": "book_id", "title": "...", "author": "...", "genre": "...", "copies": 10 }` | Update an existing book | `{ "message": "Book updated successfully", "book": { ... } }` |
+| DELETE | `/books/:id` | `Authorization: Bearer <token>` | None | Delete a book by ID | `{ "message": "Book deleted successfully", "book": { ... } }` |
 
-Response: { "total": 100, "books": [ ... ] }
+---
 
-PUT /books: Update an existing book.
+### 3️⃣ Borrowing System
 
-Body: { "id": "book_id", "title": "Updated Title", "author": "Updated Author", "genre": "Updated Genre", "copies": 10 }
+| Method | Endpoint | Headers | Body / Params | Description | Response |
+|--------|----------|---------|---------------|-------------|----------|
+| POST | `/borrowBookById` | `Authorization: Bearer <token>` | `{ "userEmail": "john@example.com", "bookId": "book_id_here" }` | Borrow a book by ID | `{ "message": "Book borrowed successfully", "borrow": { ... } }` |
+| POST | `/returnBookById/:borrowId` | `Authorization: Bearer <token>` | Path param: `borrowId` | Return a borrowed book by borrow ID | `{ "message": "Book returned successfully" }` |
+| GET | `/borrowsByMember` | `Authorization: Bearer <token>` | None | List all borrowed books by the authenticated member | `[ { "book": { ... }, "borrowDate": "date_here" }, ... ]` |
 
-Response: { "message": "Book updated successfully" }
+---
 
-DELETE /books/:id: Delete a book by ID.
+### 4️⃣ Admin Reports
 
-Response: { "message": "Book deleted successfully" }
+| Method | Endpoint | Headers | Body | Description | Response |
+|--------|----------|---------|------|-------------|----------|
+| POST | `/admin` | `Authorization: Bearer <token>` | `{}` | View library statistics, most borrowed books, and active members | `{ "bookStats": { "total": 120, "borrowed": 55, "available": 65 }, "borrowedBooks": [ { "title": "Book One", "count": 35 }, ... ], "activeMembers": [ { "name": "Alice", "count": 18 }, ... ] }` |
 
-Borrowing System
+---
 
-POST /borrowBookById: Borrow a book by ID.
-
-Body: { "userEmail": "john@example.com", "bookId": "book_id_here" }
-
-Response: { "message": "Book borrowed successfully" }
-
-POST /returnBookById/:borrowId: Return a borrowed book by borrow ID.
-
-Response: { "message": "Book returned successfully" }
-
-GET /borrowsByMember: List all borrowed books by the authenticated member.
-
-Response: [ { "book": { ... }, "borrowDate": "date_here" }, ... ]
-
-Admin Reports
-
-POST /admin: View library statistics and activity reports.
-
-Body: {} (No body required)
-
-Response: { "bookStats": { ... }, "borrowedBooks": [ ... ], "activeMembers": [ ... ] }
+> **Note:**  
+> - All protected routes require JWT in the `Authorization` header.  
+> - `borrowBookById` and `returnBookById` are restricted to `Admin` and `Member`.  
+> - `Admin` routes like `/books` and `/admin` require the user to have `Admin` role.
