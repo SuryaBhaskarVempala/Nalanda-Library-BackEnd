@@ -28,10 +28,10 @@ The **Nalanda Library Backend** is a RESTful API built with **Node.js** and **Ex
 
 ## 🔐 Authentication
 
-- ****  All protected routes require a JWT token. To obtain a token:
-- **.**  Register a new member via the /signup endpoint.
-- **.** Login using the /login endpoint to receive a token.
-- **.**  Include the token in the Authorization header as a Bearer token for subsequent requests.
+- All protected routes require a JWT token. To obtain a token:
+- Register a new member via the /signup endpoint.
+- Login using the /login endpoint to receive a token.
+- Include the token in the Authorization header as a Bearer token for subsequent requests.
 
 
 .
