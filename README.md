@@ -106,18 +106,20 @@ router.get("/borrowsByMember", adminOrMember, async (req, res) => { ... });
 
 ## 📁 Project Structure
 
-/Nalanda-Library-BackEnd
-│
-├── /Config          # Database connection and configuration
-├── /Controllers     # Route handlers for business logic
-├── /Middlewares     # Authentication and authorization middleware
-├── /Models          # Mongoose models for MongoDB collections
-├── /Routes          # API route definitions
-├── /Utils           # Utility functions and helpers (e.g., logger)
-├── .gitignore       # Git ignore file
-├── app.js           # Main application entry point
-├── package.json     # Project metadata and dependencies
-└── .env             # Environment variables (not included in version control)
+## 📁 Project Structure
+
+> **Folders:**  
+> - `/Config` : Database connection and configuration  
+> - `/Controllers` : Route handlers containing business logic  
+> - `/Middlewares` : Authentication and authorization middleware (e.g., `authCheck`, `adminOnly`, `adminOrMember`)  
+> - `/Models` : Mongoose models for MongoDB collections  
+> - `/Routes` : API route definitions  
+> - `/Utils` : Utility functions and helpers (e.g., universal `logger`)  
+> - `.gitignore` : Git ignore file  
+> - `app.js` : Main application entry point  
+> - `package.json` : Project metadata and dependencies  
+> - `.env` : Environment variables (not included in version control)
+
 
 > **Notes:**  
 > - All sensitive information like DB URI and JWT secrets are stored in `.env` and **should not** be committed.  
